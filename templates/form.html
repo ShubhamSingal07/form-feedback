@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='rest.css') }}">
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(#141e30, #243b55);
+            color: #fff;
+        }
+        .container {
+            margin-top: 5%;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+            width: 80%;
+            margin-top: 50px;
+        }
+        h1, h2, h6 {
+            text-align: center;
+            margin: 10px 0;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .user-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .user-box input {
+            width: 95%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+        }
+        .user-box label {
+            position: absolute;
+            top: 12px;
+            left: 10px;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+        .user-box input:focus ~ label,
+        .user-box input:valid ~ label {
+            top: -10px;
+            font-size: 12px;
+            color: aqua;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto;
+            display: block;
+        }
+        th, td {
+            border: 1px solid #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .rating {
+            color: white;
+            display: flex;
+            justify-content: center;
+        }
+        .rating input {
+            margin: 0 5px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background: transparent;
+            border: 1px solid #fff;
+            outline: none;
+        }
+        input[type="submit"] {
+            border: none;
+            background: #000000;
+            color: #ffffff;
+            font-size: 20px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 200px;
+            transition: background 0.3s ease;
+            display: block;
+            margin: auto;
+        }
+        input[type="submit"]:hover {
+            background: #043133;
+            color: #fff;
+            box-shadow: 0 0 5px #043133, 0 0 25px #043133, 0 0 50px #043133, 0 0 100px #043133;
+        }
+        .checkbox-group {
+            margin: 10px 0;
+            color: #fff;
+        }
+        .checkbox-group label {
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="img" src="{{ url_for('static', filename='LOGO_1__copy-remove-removebg-preview.png') }}" alt="Logo">
+        <h1>EMERALD GROUP OF SCHOOLS</h1>
+        <h2>Feedback Form</h2>
+        <h6>*Please fill all details in Capital letters</h6>
+
+        <form class="for" action="/submit" method="post">
+            <div class="user-box">
+                <input type="text" id="name" name="name" required>
+                <label for="name">Name</label>
+            </div>
+            <br>
+            <div class="user-box">
+                <input type="text" id="rollno" name="rollno" required>
+                <label for="rollno">Roll No</label>
+            </div>
+            <br>
+            <div class="user-box">
+                <input type="text" id="class" name="class" required>
+                <label for="class">Class</label>
+            </div>
+        
+            <div class="login-box" style="text-align: center;"><a>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                School Branch
+              </a></div>
+            
+            
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="school" value="ECS 79"> ECS 79</label>
+                <label><input type="checkbox" name="school" value="EIS 31"> EIS 31</label>
+                <label><input type="checkbox" name="school" value="EIS PALWAL"> EIS PALWAL</label>
+                <label><input type="checkbox" name="school" value="ADM"> ADM</label>
+            </div>
+            <br>
+            <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Teacher Name</th>
+                        <th>Subject Name</th>
+                        <th>Rating scale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(1, 8) %}
+                    <tr>
+                        <td><input type="text" name="teacher{{ i }}"></td>
+                        <td><input type="text" name="subject{{ i }}"></td>
+                        <td class="rating">
+                            <label><input type="radio" name="rating{{ i }}" value="1"> 1</label>
+                            <label><input type="radio" name="rating{{ i }}" value="2"> 2</label>
+                            <label><input type="radio" name="rating{{ i }}" value="3"> 3</label>
+                            <label><input type="radio" name="rating{{ i }}" value="4"> 4</label>
+                            <label><input type="radio" name="rating{{ i }}" value="5"> 5</label>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+            <p style="color: white; font-style: italic;">* Rating Explanation: 1 = Bad, 2 = Poor, 3 = Average, 4 = Good, 5 = Excellent</p>
+            
+            <label for="feedback" style="color: white;">Any Feedback/Suggestion for School</label><br><br>
+            <textarea id="feedback" name="feedback" rows="4" cols="50"></textarea><br><br>
+
+            <p style="color: white; font-style: italic;" >Note: Please rate your teachers honestly. You can also provide feedback for the school or the upper management. Your responses are fully confidential and will only be accessed by the Chairman sir.</p>
+            
+            <input type="submit" value="SUBMIT">
+        </form>
+    </div>
+</body>
+</html>
